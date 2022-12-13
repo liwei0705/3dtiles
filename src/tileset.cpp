@@ -1,7 +1,9 @@
-#ifdef _WIN32
+//#ifdef _WIN32
+// #include <gdal/ogr_spatialref.h>
+// #include <gdal/ogrsf_frmts.h>
 #include <gdal/ogr_spatialref.h>
 #include <gdal/ogrsf_frmts.h>
-#endif
+//#endif
 
 #include <cmath>
 #include <vector>
@@ -14,9 +16,10 @@
 ///////////////////////
 static const double pi = std::acos(-1);
 
-#ifdef _WIN32
+//#ifdef _WIN32
 extern "C" bool epsg_convert(int insrs, double* val, char* path) {
-    CPLSetConfigOption("GDAL_DATA", path);
+    //改为从os环境变量获取
+    // CPLSetConfigOption("GDAL_DATA", path);
     OGRSpatialReference inRs,outRs;
     inRs.importFromEPSG(insrs);
     outRs.importFromEPSG(4326);
@@ -32,7 +35,8 @@ extern "C" bool epsg_convert(int insrs, double* val, char* path) {
 } 
 
 extern "C" bool wkt_convert(char* wkt, double* val, char* path) {
-    CPLSetConfigOption("GDAL_DATA", path);
+    // 改为从os环境变量获取
+    // CPLSetConfigOption("GDAL_DATA", path);
     OGRSpatialReference inRs,outRs;
     inRs.importFromWkt(&wkt);
     outRs.importFromEPSG(4326);
@@ -47,20 +51,20 @@ extern "C" bool wkt_convert(char* wkt, double* val, char* path) {
     return false;
 }
 
-#else
-extern "C" bool
-epsg_convert(int insrs, double* val, char* path)
-{
-    return false;
-}
+// #else
+// extern "C" bool
+// epsg_convert(int insrs, double* val, char* path)
+// {
+//     return false;
+// }
 
-extern "C" bool
-wkt_convert(char* wkt, double* val, char* path)
-{
-    return false;
-}
+// extern "C" bool
+// wkt_convert(char* wkt, double* val, char* path)
+// {
+//     return false;
+// }
 
-#endif
+// #endif
 
 extern "C"
 {

@@ -97,6 +97,7 @@ fn build_linux_unkonw() {
     println!("cargo:rustc-link-lib=osg");
     println!("cargo:rustc-link-lib=osgDB");
     println!("cargo:rustc-link-lib=osgUtil");
+    println!("cargo:rustc-link-lib=gdal");
 }
 
 fn main() {
